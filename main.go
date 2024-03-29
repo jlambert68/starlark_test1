@@ -34,6 +34,7 @@ func main() {
 	// Expose the Go function to Starlark
 	builtins := starlark.StringDict{
 		"hello_world": starlark.NewBuiltin("hello_world", helloWorld),
+		"patrameter":  starlark.String("Denna kommer från Go"),
 	}
 
 	// Execute the Starlark script
@@ -42,5 +43,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(globals["respnse"])
+	fmt.Println("<<<From Go", globals["respnse"])
 }
