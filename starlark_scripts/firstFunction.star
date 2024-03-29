@@ -8,4 +8,10 @@ def printHello(input):
     return "Response from Star-code with input = '"+ str(input) + "'"
 
 
-respnse = printHello(patrameter)
+def starlark_def_function():
+    from_go = my_go_function("from Starlark calling Go!!!")
+    print(from_go)
+    return "666-" + from_go
+
+#response = printHello(parameter)
+print("last row")
