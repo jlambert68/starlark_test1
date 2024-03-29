@@ -1,10 +1,14 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
 	"go.starlark.net/starlark"
 	"log"
 )
+
+//go:embed starlark_scripts/firstFunction.star
+var firstFunction []byte
 
 // Define a function that can be called from Starlark
 func helloWorld(_ *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, _ []starlark.Tuple) (starlark.Value, error) {
@@ -22,7 +26,7 @@ func helloWorld(_ *starlark.Thread, _ *starlark.Builtin, args starlark.Tuple, _ 
 
 func main() {
 	// Starlark script
-	script := `print(hello_world("Starlark"))`
+	script := string(firstFunction) //`print(hello_world("Starlark"))`
 
 	// Create a Starlark thread
 	thread := &starlark.Thread{Name: "main"}
@@ -33,8 +37,10 @@ func main() {
 	}
 
 	// Execute the Starlark script
-	_, err := starlark.ExecFile(thread, "hello.star", script, builtins)
+	globals, err := starlark.ExecFile(thread, "", script, builtins)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println(globals["respnse"])
 }
